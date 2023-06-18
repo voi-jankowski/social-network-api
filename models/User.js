@@ -16,7 +16,14 @@ const userSchema = new Schema(
       // must match a valid email address (method from https://masteringjs.io/tutorials/mongoose/mongoose-validate-unique-email)
       match: [/.+@.+\..+/],
     },
-    thoughts: [thoughtSchema],
+    // Array of _id values referencing the Thought model
+    thoughts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Thought",
+      },
+    ],
+    // Array of _id values referencing the User model (self-reference)
     friends: [
       {
         type: Schema.Types.ObjectId,
@@ -31,3 +38,13 @@ const userSchema = new Schema(
     id: false,
   }
 );
+
+// Create a virtual called friendCount that retrieves the length of the user's friends array field on query.
+userSchema.virtual("friendCount").get(function () {
+  return this.friends.length;
+});
+
+// Create the User model using the userSchema
+const User = model("User", userSchema);
+
+module.exports = User;
