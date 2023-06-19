@@ -70,7 +70,7 @@ module.exports = {
     }
   },
   //   POST to create a reaction stored in a single thought's reactions array field
-  async createReaction({ params, body }, res) {
+  async addReaction({ params, body }, res) {
     try {
       const thought = await Thought.findOneAndUpdate(
         { _id: params.thoughtId },
