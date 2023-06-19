@@ -1,9 +1,7 @@
-const { ObjectId } = require("mongoose").Types;
 const { User, Thought } = require("../models");
 
 module.exports = {
   // Get all users
-
   async getAllUsers(req, res) {
     try {
       const users = await User.find();
@@ -24,7 +22,8 @@ module.exports = {
         .populate({
           path: "friends",
           select: "-__v",
-        });
+        })
+        .select("-__v");
 
       if (!user) {
         res.status(404).json({ message: "There is no user with this id!" });
