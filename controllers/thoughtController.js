@@ -19,8 +19,18 @@ module.exports = {
           select: "-__v",
         })
         .select("-__v");
+      console.log(thought);
+      if (!thought) {
+        res.status(404).json({ message: "There is no thought with this id!" });
+        return;
+      }
+      res.json(thought);
     } catch (err) {
-      res.status(404).json({ message: "There is no thought with this id!" });
+      if (err.name === "CastError") {
+        res.status(404).json({ message: "Invalid thought ID!" });
+        return;
+      }
+      res.status(500).json(err);
     }
   },
   //   POST to create a new thought (don't forget to push the created thought's _id to the associated user's thoughts array field)
