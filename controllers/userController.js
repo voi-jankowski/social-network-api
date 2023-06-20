@@ -27,11 +27,14 @@ module.exports = {
 
       if (!user) {
         res.status(404).json({ message: "There is no user with this id!" });
-        // return;
+        return;
       }
       res.json(user);
     } catch (err) {
-      console.log(err);
+      if (err.name === "CastError") {
+        res.status(404).json({ message: "Invalid user ID!" });
+        return;
+      }
       res.status(500).json(err);
     }
   },
@@ -55,11 +58,14 @@ module.exports = {
       );
       if (!user) {
         res.status(404).json({ message: "There is no user with this id!" });
-        // return;
+        return;
       }
       res.json(user);
     } catch (err) {
-      console.log(err);
+      if (err.name === "CastError") {
+        res.status(404).json({ message: "Invalid user ID!" });
+        return;
+      }
       res.status(500).json(err);
     }
   },
@@ -69,13 +75,16 @@ module.exports = {
       const user = await User.findOneAndDelete({ _id: params.id });
       if (!user) {
         res.status(404).json({ message: "There is no user with this id!" });
-        // return;
+        return;
       }
 
       await Thought.deleteMany({ _id: { $in: user.thoughts } });
       res.json({ message: "User and associated thoughts deleted!" });
     } catch (err) {
-      console.log(err);
+      if (err.name === "CastError") {
+        res.status(404).json({ message: "Invalid user ID!" });
+        return;
+      }
       res.status(500).json(err);
     }
   },
@@ -89,7 +98,7 @@ module.exports = {
       );
       if (!user) {
         res.status(404).json({ message: "There is no user with this id!" });
-        // return;
+        return;
       }
       res.json(user);
     } catch (err) {
@@ -107,7 +116,7 @@ module.exports = {
       );
       if (!user) {
         res.status(404).json({ message: "There is no user with this id!" });
-        // return;
+        return;
       }
       res.json(user);
     } catch (err) {
