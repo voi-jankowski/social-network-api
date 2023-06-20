@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 const reactionSchema = require("./Reaction");
+const { convertTime } = require("../utils/convertTime");
 
 // Schema to create Thought model
 const thoughtSchema = new Schema(
@@ -15,7 +16,7 @@ const thoughtSchema = new Schema(
       type: Date,
       default: Date.now,
       // use a getter method to format the timestamp on query
-      get: (timestamp) => timestamp.toTimeString(),
+      get: (timestamp) => convertTime(timestamp),
     },
     // The user that created this thought
     username: {

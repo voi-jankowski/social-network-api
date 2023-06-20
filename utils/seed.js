@@ -74,8 +74,8 @@ connection.once("open", async () => {
       await User.findByIdAndUpdate(users[i]._id, { friends: friends });
     }
 
-    console.table("Users seeded:", await User.find());
-    console.table("Thoughts seeded:", await Thought.find());
+    console.log("Users seeded:", await User.find());
+    console.log("Thoughts seeded:", await Thought.find());
     console.info("All done!");
     process.exit(0);
   } catch (err) {

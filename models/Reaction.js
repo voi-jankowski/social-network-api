@@ -1,4 +1,5 @@
 const { Schema, Types } = require("mongoose");
+const { convertTime } = require("../utils/convertTime");
 
 const reactionSchema = new Schema(
   {
@@ -22,7 +23,7 @@ const reactionSchema = new Schema(
       type: Date,
       default: Date.now,
       // use a getter method to format the timestamp on query
-      get: (timestamp) => timestamp.toTimeString(),
+      get: (timestamp) => convertTime(timestamp),
     },
   },
   {
