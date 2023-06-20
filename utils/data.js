@@ -61,10 +61,6 @@ const thoughtSeedData = [
 
 const reactionSeedData = [
   {
-    reactionBody: "Great thought!",
-    username: "john_doe",
-  },
-  {
     reactionBody: "Interesting!",
     username: "jane_smith",
   },
@@ -79,6 +75,26 @@ const reactionSeedData = [
   {
     reactionBody: "I don't know.",
     username: "michael123",
+  },
+  {
+    reactionBody: "I'm not sure.",
+    username: "john_doe",
+  },
+  {
+    reactionBody: "I'm not sure.",
+    username: "jane_smith",
+  },
+  {
+    reactionBody: "Totally!",
+    username: "alexander",
+  },
+  {
+    reactionBody: "What a thought!",
+    username: "emily",
+  },
+  {
+    reactionBody: "Great thought!",
+    username: "john_doe",
   },
 ];
 
