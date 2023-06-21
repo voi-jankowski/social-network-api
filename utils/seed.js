@@ -29,9 +29,11 @@ connection.once("open", async () => {
     // Loop through thoughts, add them to the users that created them and add reactions
     for (let i = 0; i < thoughts.length; i++) {
       // Add thought to user
-      await User.findByIdAndUpdate(thoughts[i].username, {
-        $push: { thoughts: thoughts[i]._id },
-      });
+      await User.findOneAndUpdate(
+        { username: thoughts[i].username },
+        { $push: { thoughts: thoughts[i]._id } },
+        { new: true }
+      );
 
       // Get two random reactions from the reactionSeedData array to add to each thought provided they are not the same and not the same as the thought's username
       const reactions = [];
