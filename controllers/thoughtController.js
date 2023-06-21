@@ -39,7 +39,7 @@ module.exports = {
       const thought = await Thought.create(body);
 
       await User.findOneAndUpdate(
-        { _id: body.userId },
+        { username: body.username },
         { $push: { thoughts: thought._id } },
         { new: true }
       );
@@ -63,6 +63,10 @@ module.exports = {
       }
       res.json(thought);
     } catch (err) {
+      if (err.name === "CastError") {
+        res.status(404).json({ message: "Invalid thought ID!" });
+        return;
+      }
       res.status(500).json(err);
     }
   },
@@ -76,6 +80,10 @@ module.exports = {
       }
       res.json(thought);
     } catch (err) {
+      if (err.name === "CastError") {
+        res.status(404).json({ message: "Invalid thought ID!" });
+        return;
+      }
       res.status(500).json(err);
     }
   },
