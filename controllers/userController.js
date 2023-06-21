@@ -127,31 +127,31 @@ module.exports = {
   // DELETE to remove a friend from a user's friend list
   async deleteFriend({ params }, res) {
     try {
-      // Validate if the user is not befriending themselves
-      if (params.userId === params.friendId) {
-        res.status(400).json({ message: "You cannot unfriend yourself!" });
-        return;
-      }
+      const friendId = params.friendId;
+      const userId = params.userId;
 
-      // Validate if it matches any of the existing users
-      const friend = await User.findOne({ _id: params.friendId });
-
-      if (friend) {
-        const user = await User.findOneAndUpdate(
-          { _id: params.userId },
-          { $pull: { friends: params.friendId } },
-          { new: true }
-        );
-      } else {
-        res.status(404).json({ message: "There is no friend with this id!" });
-        return;
-      }
+      // Find the user by their ID
+      const user = await User.findOne({ _id: userId });
 
       if (!user) {
         res.status(404).json({ message: "There is no user with this id!" });
         return;
       }
-      res.json(user);
+
+      // Check if the friend ID exists in the user's friend list
+      const friendIndex = user.friends.indexOf(friendId);
+
+      if (friendIndex !== -1) {
+        const userUpdated = await User.findOneAndUpdate(
+          { _id: userId },
+          { $pull: { friends: friendId } },
+          { new: true }
+        );
+        res.json(userUpdated);
+      } else {
+        res.status(404).json({ message: "There is no friend with this id!" });
+        return;
+      }
     } catch (err) {
       console.log(err);
       res.status(500).json(err);
