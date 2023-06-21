@@ -91,16 +91,31 @@ module.exports = {
   // POST to add a new friend to a user's friend list
   async addFriend({ params }, res) {
     try {
-      const user = await User.findOneAndUpdate(
-        { _id: params.id },
-        { $addToSet: { friends: params.friendId } },
-        { new: true }
-      );
-      if (!user) {
-        res.status(404).json({ message: "There is no user with this id!" });
+      // Validate if the user is not befriending themselves
+      if (params.userId === params.friendId) {
+        res.status(400).json({ message: "You cannot unfriend yourself!" });
         return;
       }
-      res.json(user);
+
+      // Validate if it matches any of the existing users
+      const friend = await User.findOne({ _id: params.friendId });
+
+      if (friend) {
+        const user = await User.findOneAndUpdate(
+          { _id: params.userId },
+          { $addToSet: { friends: params.friendId } },
+          { new: true }
+        );
+
+        if (!user) {
+          res.status(404).json({ message: "There is no user with this id!" });
+          return;
+        }
+        res.json(user);
+      } else {
+        res.status(404).json({ message: "There is no friend with this id!" });
+        return;
+      }
     } catch (err) {
       if (err.name === "CastError") {
         res.status(404).json({ message: "Invalid user ID!" });
@@ -112,11 +127,26 @@ module.exports = {
   // DELETE to remove a friend from a user's friend list
   async deleteFriend({ params }, res) {
     try {
-      const user = await User.findOneAndUpdate(
-        { _id: params.id },
-        { $pull: { friends: params.friendId } },
-        { new: true }
-      );
+      // Validate if the user is not befriending themselves
+      if (params.userId === params.friendId) {
+        res.status(400).json({ message: "You cannot unfriend yourself!" });
+        return;
+      }
+
+      // Validate if it matches any of the existing users
+      const friend = await User.findOne({ _id: params.friendId });
+
+      if (friend) {
+        const user = await User.findOneAndUpdate(
+          { _id: params.userId },
+          { $pull: { friends: params.friendId } },
+          { new: true }
+        );
+      } else {
+        res.status(404).json({ message: "There is no friend with this id!" });
+        return;
+      }
+
       if (!user) {
         res.status(404).json({ message: "There is no user with this id!" });
         return;
