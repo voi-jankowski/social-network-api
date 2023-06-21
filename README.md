@@ -46,7 +46,7 @@ The server will be started and the Mongoose models will be synced to the MongoDB
 
 - GET /api/users: Get all users.
 
-  ![Getting all users.](./assets/e-commerce-1.png)
+  ![Getting all users.](./assets/img/social-network-1.png)
 
 - GET /api/users/:userId: Get a single user by ID.
 
@@ -62,7 +62,7 @@ The server will be started and the Mongoose models will be synced to the MongoDB
 
 - POST /api/thoughts: Create a new thought.
 
-  ![Creating new thought.](./assets/e-commerce-1.png)
+  ![Creating new thought.](./assets/img/social-network-2.png)
 
 - PUT /api/thoughts/:thoughtId: Update a thought by ID.
 
@@ -74,7 +74,7 @@ The server will be started and the Mongoose models will be synced to the MongoDB
 
 - POST /api/users/:userId/friends/:friendId: Add a friend to a user's friend list.
 
-  ![Adding new friend.](./assets/e-commerce-1.png)
+  ![Adding new friend.](./assets/img/social-network-3.png)
 
 - DELETE /api/users/:userId/friends/:friendId: Remove a friend from a user's friend list.
 
