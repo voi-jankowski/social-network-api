@@ -78,7 +78,7 @@ module.exports = {
         res.status(404).json({ message: "There is no thought with this id!" });
         return;
       }
-      res.json(thought);
+      res.json({ message: "Thought deleted!" });
     } catch (err) {
       if (err.name === "CastError") {
         res.status(404).json({ message: "Invalid thought ID!" });
@@ -101,23 +101,40 @@ module.exports = {
       }
       res.json(thought);
     } catch (err) {
+      if (err.name === "CastError") {
+        res.status(404).json({ message: "Invalid thought ID!" });
+        return;
+      }
       res.status(500).json(err);
     }
   },
   //   DELETE to pull and remove a reaction by the reaction's reactionId value
   async deleteReaction({ params }, res) {
     try {
-      const thought = await Thought.findOneAndUpdate(
-        { _id: params.thoughtId },
-        { $pull: { reactions: { reactionId: params.reactionId } } },
-        { new: true }
-      );
+      const thoughtId = params.thoughtId;
+      const reactionId = params.reactionId;
+
+      // Find thought by id
+      const thought = await Thought.findOne({ _id: thoughtId });
+
+      console.log("Thought:", thought);
+
       if (!thought) {
         res.status(404).json({ message: "There is no thought with this id!" });
         return;
       }
-      res.json(thought);
+
+      const thoughtUpdated = await Thought.findOneAndUpdate(
+        { _id: thoughtId },
+        { $pull: { reactions: { reactionId: reactionId } } },
+        { new: true }
+      );
+      res.json(thoughtUpdated);
     } catch (err) {
+      if (err.name === "CastError") {
+        res.status(404).json({ message: "Invalid thought ID!" });
+        return;
+      }
       res.status(500).json(err);
     }
   },
