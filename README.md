@@ -13,7 +13,6 @@ The Social Network API is a backend application that provides API routes for man
 - [License](#license)
 - [Contributing](#contributing)
 - [Questions](#questions)
-- [Credits](#credits)
 - [Links](#links)
 
 ## Installation
@@ -108,12 +107,10 @@ If you have any questions about the project please contact me through [my Github
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Credits
-
 ## Links
 
 The location of the project [on GitHub](https://github.com/voi-jankowski/social-network-api).
 
-The walkthrough video can be accessed on [here](https://drive.google.com/file/d/1kvIoDzqoPxlxQgBIaNBmxJ0PLiFMlkSh/view).
+The walkthrough video can be accessed on [here](https://drive.google.com/file/d/1RXcv0co4oSyFuWFxGCh35C7-WFQp_DWd/view).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
