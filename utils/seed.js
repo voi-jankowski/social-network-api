@@ -26,8 +26,13 @@ connection.once("open", async () => {
     // Bulk create thoughts
     const thoughts = await Thought.insertMany(thoughtSeedData);
 
-    // Loop through thoughts and add reactions
+    // Loop through thoughts, add them to the users that created them and add reactions
     for (let i = 0; i < thoughts.length; i++) {
+      // Add thought to user
+      await User.findByIdAndUpdate(thoughts[i].username, {
+        $push: { thoughts: thoughts[i]._id },
+      });
+
       // Get two random reactions from the reactionSeedData array to add to each thought provided they are not the same and not the same as the thought's username
       const reactions = [];
       let reaction1 = reactionSeedData[Math.floor(Math.random() * 9)];

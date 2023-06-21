@@ -102,7 +102,10 @@ module.exports = {
       }
       res.json(user);
     } catch (err) {
-      console.log(err);
+      if (err.name === "CastError") {
+        res.status(404).json({ message: "Invalid user ID!" });
+        return;
+      }
       res.status(500).json(err);
     }
   },
